@@ -2,16 +2,16 @@ version: '3.7'
 services:
 
   postal-app:
-    image: tiredofit/postal:latest
+    image: sibren/docker-postal:latest
     container_name: postal-app
     ports:
-      - 25:2525
+      - 25:25
     labels:
       - traefik.enable=true
-      - traefik.frontend.rule=Host:postal.example.com
+      - traefik.frontend.rule=Host(`postal.example.com`)
       - traefik.port=5000
       - traefik.protocol=http
-      - traefik.docker.network=proxy
+      - traefik.docker.network=traefik-public
       - traefik.backend=postal-app
     volumes:
       - ./logs/postal:/logs
@@ -66,7 +66,7 @@ services:
       - WEB_PROTOCOL=https
 
     networks:
-      - proxy
+      - traefik-public
       - services
     restart: always
 
@@ -146,7 +146,7 @@ services:
     restart: always
 
 networks:
-  proxy:
+  traefik-public:
     external: true
   services:
-    external: true
+    external: false

@@ -1,8 +1,8 @@
 FROM docker.io/tiredofit/alpine:3.14
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
-ENV POSTAL_VERSION=2.1.0 \
-    POSTAL_REPO_URL=https://github.com/postalhq/postal \
+ENV POSTAL_VERSION=2.1.2 \
+    POSTAL_REPO_URL=https://github.com/postalserver/postal \
     POSTAL_CONFIG_ROOT=/app/config/ \
     CONTAINER_ENABLE_MESSAGING=FALSE \
     RAILS_ENV=production
@@ -34,10 +34,10 @@ RUN set -x && \
             ruby-io-console \
             && \
     \
-    gem install bundler -v 1.17.2 && \
+    gem install bundler -v 2.4.8 && \
     \
 ### Fetch Source and install Ruby Dependencies
-    git clone https://github.com/postalhq/postal /app/ && \
+    git clone https://github.com/postalserver/postal /app/ && \
     cd /app && \
     bundle install -j "$(nproc)" && \
     if [ $POSTAL_VERSION = "main" ] || [ $POSTAL_VERSION = "master" ] ; then git -C /app rev-parse HEAD > /app/VERSION ; else echo $POSTAL_VERSION > /app/VERSION ; fi ; \
