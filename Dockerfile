@@ -34,7 +34,7 @@ RUN set -x && \
             ruby-io-console \
             && \
     \
-    gem install bundler -v 2.4.8 && \
+    gem install bundler -v 2.4.12 && \
     \
 ### Fetch Source and install Ruby Dependencies
     git clone https://github.com/postalserver/postal /app/ && \
