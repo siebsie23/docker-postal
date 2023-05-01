@@ -1,23 +1,17 @@
-# github.com/tiredofit/docker-postal
+# Docker-Postal
 
-[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-postal?style=flat-square)](https://github.com/tiredofit/docker-postal/releases/latest)
-[![Build Status](https://img.shields.io/github/workflow/status/tiredofit/docker-postal/build?style=flat-square)](https://github.com/tiredofit/docker-postal/actions?query=workflow%3Abuild)
-[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/postal.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/postal/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/postal.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/postal/)
-[![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
-[![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
+[![GitHub release](https://img.shields.io/github/v/tag/siebsie23/docker-postal?style=flat-square)](https://github.com/siebsie23/docker-postal/releases/latest)
+[![Build Status](https://img.shields.io/github/workflow/status/siebsie23/docker-postal/build?style=flat-square)](https://github.com/siebsie23/docker-postal/actions)
 
 * * *
 
 ## About
 
-Dockerfile to build a [Postal](https://github.com/postalserver/postal) SMTP server for sending and receiving SMTP / HTTP API email.
+This is a fork of the [tiredofit/docker-postal](https://github.com/tiredofit/docker-postal) repository that is updated to use the latest version of Postal and fix some bugs.
+
+Docker-Postal is a Dockerfile to build a [Postal](https://github.com/postalserver/postal) SMTP server for sending and receiving SMTP / HTTP API email.
 
 * Contains Fail2Ban for blocking repeat authentication offenders
-
-## Maintainer
-
-- [Dave Conroy](https://github.com/tiredofit/)
 
 ## Prerequisites and Assumptions
 - Required [RabbitMQ Server](https://github.com/tiredofit/docker-rabbitmq)
@@ -27,20 +21,15 @@ Dockerfile to build a [Postal](https://github.com/postalserver/postal) SMTP serv
 
 ## Installation
 
+### Use the pre-built package
+Prebuilt images are available on [GitHub Packages](https://github.com/siebsie23/docker-postal/pkgs/container/docker-postal).
+The latest image is available at `ghcr.io/siebsie23/docker-postal:latest`.
+
 ### Build from Source
 Clone this repository and build the image with `docker build <arguments> (imagename) .`
 
-### Prebuilt Images
-Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/postal) and is the recommended method of installation.
-
-The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
-
-| Container OS | Tag       |
-| ------------ | --------- |
-| Alpine       | `:latest` |
-
 #### Multi Architecture
-Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
+Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
 
 ## Configuration
 
@@ -250,18 +239,11 @@ These images were built to serve a specific need in a production environment and
 ### Bugfixes
 - Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
 
-### Feature Requests
-- Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
-- Consider [sponsoring me](https://github.com/sponsors/tiredofit) regarding development of features.
-
-### Updates
-- Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
-- Consider [sponsoring me](https://github.com/sponsors/tiredofit) for up to date releases.
-
 ## License
 MIT. See [LICENSE](LICENSE) for more details.
 
 ## References
 
+* https://github.com/tiredofit/docker-postal
 * https://github.com/postalhq/postal
 
