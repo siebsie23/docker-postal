@@ -1,7 +1,7 @@
-FROM docker.io/tiredofit/alpine:3.14
-LABEL maintainer="Dave Conroy (github.com/tiredofit)"
+FROM docker.io/tiredofit/alpine:3.16
+LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
 
-ENV POSTAL_VERSION=2.1.2 \
+ENV POSTAL_VERSION=2.1.4 \
     POSTAL_REPO_URL=https://github.com/postalserver/postal \
     POSTAL_CONFIG_ROOT=/app/config/ \
     CONTAINER_ENABLE_MESSAGING=FALSE \
