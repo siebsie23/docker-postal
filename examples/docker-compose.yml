@@ -85,29 +85,6 @@ services:
       - services
     restart: always
 
-  postal-db-backup:
-    image: tiredofit/db-backup:latest
-    container_name: postal-db-backup
-    links:
-      - postal-db
-    volumes:
-      - ./dbbackup:/backup
-    environment:
-      - CONTAINER_NAME=postal-db-backup
-      - DB_HOST=postal-db
-      - DB_TYPE=mariadb
-      - DB_NAME=postal
-      - DB_USER=postal
-      - DB_PASS=postalpass
-      - DB_DUMP_FREQ=1440
-      - DB_DUMP_BEGIN=0000
-      - DB_CLEANUP_TIME=8640
-      - COMPRESSION=ZSTD
-      - MD5=TRUE
-    networks:
-      - services
-    restart: always
-
   postal-rabbitmq:
     container_name: postal-rabbitmq
     image: tiredofit/rabbitmq
@@ -128,19 +105,6 @@ services:
       - ./logs/clamav:/var/log/clamav
     environment:
       - CONTAINER_NAME=postal-clamav
-    networks:
-      - services
-    restart: always
-
-  postal-spamassassin:
-    image: tiredofit/spamassassin
-    container_name: postal-spamassassin-app
-    volumes:
-      - ./logs/spamassassin:/var/log/spamassassin
-      - ./data/spamassassin/conf:/etc/mail/spamassassin
-      - ./data/spamassassin/data:/var/lib/spamassassin
-    environment:
-      - CONTAINER_NAME=postal-spamassassin
     networks:
       - services
     restart: always
