@@ -13,11 +13,9 @@ Docker-Postal is a Dockerfile to build a [Postal](https://github.com/postalserve
 
 * Contains Fail2Ban for blocking repeat authentication offenders
 
-## Prerequisites and Assumptions
+## Prerequisites
 - Required [RabbitMQ Server](https://github.com/tiredofit/docker-rabbitmq)
 - Required [MariaDB Server](https://github.com/tiredofit/docker-mariadb)
-- Optional [Spamassassin](https://github.com/tiredofit/docker-spamassassin)
-- Optional [Clam Antivirus](https://github.com/tiredofit/docker-clamav)
 
 ## Installation
 
