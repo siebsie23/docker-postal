@@ -14,7 +14,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  main:
+  postalmain:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: 'main'
-  2_1_4:
+  postal214:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
