@@ -2,19 +2,21 @@ version: '3.7'
 services:
 
   postal-app:
-    image: ghcr.io/siebsie23/docker-postal:latest
+    image: ghcr.io/siebsie23/docker-postal:1.1.0
     container_name: postal-app
     ports:
-      - 25:25
+      - "25:25"
     labels:
-      - traefik.enable=true
-      - traefik.frontend.rule=Host(`postal.example.com`)
-      - traefik.port=5000
-      - traefik.protocol=http
       - traefik.docker.network=traefik-public
-      - traefik.backend=postal-app
+      - traefik.http.routers.postal.rule=Host(`postal.example.com`)
+      - traefik.http.routers.postal.entrypoints=websecure
+      - traefik.http.routers.postal.tls=true
+      - traefik.http.routers.postal.tls.certresolver=leresolver
+      - traefik.http.services.postal-app.loadbalancer.server.port=5000
     volumes:
       - ./logs/postal:/logs
+      - ./config/postal:/config
+      - /root/traefik/certs:/certs
     environment:
       - CONTAINER_NAME=postal-app
 
@@ -37,24 +39,24 @@ services:
       - RABBITMQ_PASS=password
       - RABBITMQ_VHOST=/postal
 
-      - ENABLE_SPAMASSASSIN=false
+      - ENABLE_SPAMASSASSIN=true
       - SPAMASSASSIN_HOST=postal-spamassassin
 
-      - ENABLE_RSPAMD=false
-      - RSPAMD_HOST=postal-rspamd
-
-      - ENABLE_CLAMAV=false
+      - ENABLE_CLAMAV=true
       - CLAMAV_HOST=postal-clamav
 
       - DNS_HOSTNAME=postal.example.com
-      - DNS_MX=mx.example.com
-      - DNS_RETURN_PATH=rp.example.com
+      - DNS_MX=postal.example.com
+      - DNS_RETURN_PATH=rp.postal.example.com
       - DNS_ROUTE_DOMAIN=routes.postal.example.com
-      - DNS_TRACK_DOMAIN=track.postal.example.com
+      - DNS_TRACK_DOMAIN=postal.example.com
       - DNS_SPF=spf.postal.example.com
       - DNS_DKIM_IDENTIFIER=postal
-      - DNS_DOMAIN_VERIFY_PREFIX=example-verification
-      - SMTP_SERVER_ENABLE_TLS=false
+      - DNS_DOMAIN_VERIFY_PREFIX=kd-verify
+
+      - SMTP_SERVER_ENABLE_TLS=true
+      - SMTP_SERVER_TLS_CERT=/certs/certs/postal.example.com.crt
+      - SMTP_SERVER_TLS_KEY=/certs/private/postal.example.com.key
 
       - SMTP_FROM_ADDRESS=noreply@example.com
       - SMTP_FROM_NAME=Postal
@@ -62,7 +64,7 @@ services:
       - SMTP_USER=   ## Fill these in after you have a working installation and server to be able to invite users
       - SMTP_PASS=   ##
 
-      - WEB_HOST=mx.example.com
+      - WEB_HOST=postal.example.com
       - WEB_PROTOCOL=https
 
     networks:
@@ -75,12 +77,33 @@ services:
     container_name: postal-db
     volumes:
       - ./db:/var/lib/mysql
+      - ./config/mariadb:/etc/mysql/conf.d
     environment:
-      - ROOT_PASS=rootpassword
+      - ROOT_PASS=postalrpass
       - DB_NAME=postal
       - DB_USER=postal
       - DB_PASS=postalpass
       - CONTAINER_NAME=postal-db
+    networks:
+      - services
+    restart: always
+
+  postal-db-backup:
+    image: tiredofit/db-backup:latest
+    container_name: postal-db-backup
+    links:
+      - postal-db
+    volumes:
+      - ./dbbackup:/backup
+    environment:
+      - CONTAINER_NAME=postal-db-backup
+      - DB_HOST=postal-db
+      - DB_TYPE=mariadb
+      - DB_NAME=postal
+      - DB_USER=postal
+      - DB_PASS=postalpass
+      - DEFAULT_CLEANUP_TIME=10080
+      - CONTAINER_ENABLE_MONITORING=FALSE
     networks:
       - services
     restart: always
@@ -109,8 +132,21 @@ services:
       - services
     restart: always
 
+  postal-spamassassin:
+    image: tiredofit/spamassassin
+    container_name: postal-spamassassin
+    volumes:
+      - ./logs/spamassassin:/logs/
+      - ./data/spamassassin/conf:/config/
+      - ./data/spamassassin/data:/data/
+    environment:
+      - CONTAINER_NAME=postal-spamassassin
+    networks:
+      - services
+    restart: always
+
 networks:
   traefik-public:
     external: true
   services:
-    external: false
+    driver: bridge
