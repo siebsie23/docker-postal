@@ -1,0 +1,16 @@
+name: Build image
+description: Build Docker image
+inputs:
+  version:
+    description: postal version
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - name: Build image
+    env:
+      POSTAL_VERSION: ${{ inputs.version }}
+    run: |
+      set -e
+      $GITHUB_ACTION_PATH/release.sh
+    shell: bash
