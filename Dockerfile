@@ -39,6 +39,7 @@ RUN set -x && \
     git clone --depth 1 --branch $POSTAL_VERSION https://github.com/postalserver/postal /app/ && \
     cd /app && \
     bundle install -j "$(nproc)" && \
+    git config --global --add safe.directory /app && \
     if [ $POSTAL_VERSION = "main" ] ; then git rev-parse --short HEAD > /app/VERSION ; else echo $POSTAL_VERSION > /app/VERSION ; fi && \
     chown -R postal /app/ && \
     \
