@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   postal-app:
-    image: ghcr.io/siebsie23/docker-postal:1.1.0
+    image: siebsie23/docker-postal:main
     container_name: postal-app
     ports:
       - "25:25"
