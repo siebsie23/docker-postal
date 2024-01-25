@@ -20,20 +20,16 @@ Docker-Postal is a Dockerfile to build a [Postal](https://github.com/postalserve
 ## Installation
 
 ### Use the pre-built package
-Prebuilt images are available on [Docker Hub](https://hub.docker.com/repository/docker/siebsie23/docker-postal).
-`siebsie23/docker-postal:main`
+Prebuilt images are available on [Docker Hub](https://hub.docker.com/repository/docker/siebsie23/docker-postal) at `siebsie23/docker-postal`
 
-Available images:
-| Image tag | Description |
-| ------------- | ------------- |
-| `main`  | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)** |
-| `2.1.4` | Postal image built on version tag 2.1.4
+Available tags:
+| Image tag     | Description                                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)** |
+| `2.1.4`.      | Postal image built on version tag 2.1.4                                                                              |
 
 ### Build from Source
-Clone this repository and build the image with `docker build <arguments> (imagename) .`
-
-#### Multi Architecture
-Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
+Clone this repository and build the image with `make build POSTAL_VERSION="version"` version being a valid postal branch or tag.
 
 ## Configuration
 
@@ -245,5 +241,5 @@ MIT. See [LICENSE](LICENSE) for more details.
 ## References
 
 * https://github.com/tiredofit/docker-postal
-* https://github.com/postalhq/postal
+* https://github.com/postalserver/postal
 
