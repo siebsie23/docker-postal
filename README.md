@@ -1,7 +1,7 @@
 # Docker-Postal
 
 [![GitHub release](https://img.shields.io/github/v/tag/siebsie23/docker-postal?style=flat-square)](https://github.com/siebsie23/docker-postal/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/siebsie23/docker-postal/build-and-publish.yml)](https://github.com/siebsie23/docker-postal/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/siebsie23/docker-postal/.github%2Fworkflows%2Fbuild-and-push.yml)](https://github.com/siebsie23/docker-postal/actions)
 
 * * *
 
