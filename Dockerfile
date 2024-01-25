@@ -1,10 +1,8 @@
-ARG POSTAL_VERSION
-
 FROM docker.io/tiredofit/alpine:3.17
+ARG POSTAL_VERSION="main"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
 
-ENV POSTAL_REPO_URL=https://github.com/postalserver/postal \
-    POSTAL_CONFIG_ROOT=/app/config/ \
+ENV POSTAL_CONFIG_ROOT=/app/config/ \
     CONTAINER_ENABLE_MESSAGING=FALSE \
     RAILS_ENV=production
 
@@ -14,14 +12,14 @@ RUN set -x && \
     \
     apk update && \
     apk upgrade && \
-    apk add -t .postal-build-deps \
+    apk add --virtual .postal-build-deps \
             build-base \
             git \
             mariadb-dev \
             ruby-dev \
             && \
     \
-    apk add -t .postal-run-deps \
+    apk add --virtual .postal-run-deps \
             expect \
             fail2ban \
             gawk \
@@ -37,16 +35,16 @@ RUN set -x && \
     \
     gem install bundler -v 2.5.5 && \
     \
-### Fetch Source and install Ruby Dependencies
-    git clone https://github.com/postalserver/postal /app/ && \
+    ### Fetch Source and install Ruby Dependencies
+    git clone --depth 1 --branch $POSTAL_VERSION https://github.com/postalserver/postal /app/ && \
     cd /app && \
     bundle install -j "$(nproc)" && \
-    if [ $POSTAL_VERSION = "main" ] ; then git rev-parse HEAD > /app/VERSION ; else echo $POSTAL_VERSION > /app/VERSION ; fi ; \
+    if [ $POSTAL_VERSION = "main" ] ; then git rev-parse --short HEAD > /app/VERSION ; else echo $POSTAL_VERSION > /app/VERSION ; fi && \
+    chown -R postal /app/ && \
     \
-# Cleanup
-    chown -R postal. /app/ && \
+    # Cleanup
     rm -rf /app/docker-compose.yml /app/Dockerfile /app/Makefile && \
-    rm -rf /app/log & \
+    rm -rf /app/log && \
     rm -rf /root/.bundle /root/.gem && \
     cd /etc/fail2ban && \
     rm -rf fail2ban.conf fail2ban.d jail.conf jail.d paths-*.conf && \
