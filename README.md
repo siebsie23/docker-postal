@@ -26,8 +26,8 @@ Available tags:
 | Image tag     | Description                                                                                                          |
 | ------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)** |
-| `2.1.6`.      | Postal image built on version tag 2.1.6                                                                              |
-| `2.1.4`.      | Postal image built on version tag 2.1.4                                                                              |
+| `2.1.6`       | Postal image built on version tag 2.1.6                                                                              |
+| `2.1.4`       | Postal image built on version tag 2.1.4                                                                              |
 
 ### Build from Source
 Clone this repository and build the image with `make build POSTAL_VERSION="version"` version being a valid postal branch or tag.
