@@ -21,7 +21,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: 'main'
-  postal214:
+  postal216:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -29,4 +29,4 @@ jobs:
     - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
-        version: '2.1.4'
+        version: '2.1.6'
