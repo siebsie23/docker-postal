@@ -20,14 +20,13 @@ Docker-Postal is a Dockerfile to build a [Postal](https://github.com/postalserve
 ## Installation
 
 ### Use the pre-built package
-Prebuilt images are available on [Docker Hub](https://hub.docker.com/repository/docker/siebsie23/docker-postal) at `siebsie23/docker-postal`
+Prebuilt images are available on [Docker Hub](https://hub.docker.com/repository/docker/siebsie23/docker-postal) at `siebsie23/docker-postal` and are built daily.
 
 Available tags:
-| Image tag     | Description                                                                                                          |
-| ------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)** |
-| `2.1.6`       | Postal image built on version tag 2.1.6                                                                              |
-| `2.1.4`       | Postal image built on version tag 2.1.4                                                                              |
+| Image tag     | Description                                                                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)**                                          |
+| `*.*.*`       | Postal image built on a release tag. To view all available images visit [siebsie23/docker-postal/tags](https://hub.docker.com/r/siebsie23/docker-postal/tags) |
 
 ### Build from Source
 Clone this repository and build the image with `make build POSTAL_VERSION="version"` version being a valid postal branch or tag.
