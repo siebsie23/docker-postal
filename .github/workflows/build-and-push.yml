@@ -2,10 +2,8 @@ name: Build and push docker images
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron:  '0 12 * * *'
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
