@@ -1,6 +1,8 @@
 FROM docker.io/tiredofit/alpine:3.17
 ARG POSTAL_VERSION="main"
+ARG POSTAL_COMMIT="304828a"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
+LABEL commit="$POSTAL_COMMIT"
 
 ENV POSTAL_CONFIG_ROOT=/app/config/ \
     CONTAINER_ENABLE_MESSAGING=FALSE \
