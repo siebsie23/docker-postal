@@ -10,7 +10,7 @@ docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}";
 # Check which postal version to build.
 # If the postal version equals to release, get the latest release from the postal repository.
 if [[ "${POSTAL_VERSION}" == "release" ]]; then
-    POSTAL_VERSION=$(curl -s https://api.github.com/repos/postalhq/postal/releases/latest | jq -r .tag_name);
+    POSTAL_VERSION=$(curl -s https://api.github.com/repos/postalserver/postal/releases/latest | jq -r .tag_name);
 
     # Check if the fetched postal version is already built, do not build it again.
     if [[ $(curl -s https://hub.docker.com/v2/repositories/siebsie23/docker-postal/tags/${POSTAL_VERSION} | jq -r .name) == "${POSTAL_VERSION}" ]]; then
@@ -22,7 +22,7 @@ fi
 # If the postal version is main, check if the latest commit is already built, do not build it again.
 if [[ "${POSTAL_VERSION}" == "main" ]]; then
     # Get the latest commit hash from the postal repository.
-    LATEST_COMMIT=$(curl -s https://api.github.com/repos/postalhq/postal/commits/main | jq -r .sha);
+    LATEST_COMMIT=$(curl -s https://api.github.com/repos/postalserver/postal/commits/main | jq -r .sha);
 
     # Convert the commit hash to a short commit hash.
     SHORT_COMMIT=$(echo "${LATEST_COMMIT}" | cut -c1-7);
