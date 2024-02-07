@@ -26,6 +26,7 @@ Available tags:
 | Image tag     | Description                                                                                                                                                   |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)**                                          |
+| `latest`      | Latest postal releases                                                                                                                                        |
 | `*.*.*`       | Postal image built on a release tag. To view all available images visit [siebsie23/docker-postal/tags](https://hub.docker.com/r/siebsie23/docker-postal/tags) |
 
 ### Build from Source
