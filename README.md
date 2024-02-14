@@ -25,9 +25,9 @@ Prebuilt images are available on [Docker Hub](https://hub.docker.com/repository/
 Available tags:
 | Image tag     | Description                                                                                                                                                   |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Use at your own risk)**                                          |
-| `latest`      | Latest postal releases                                                                                                                                        |
-| `*.*.*`       | Postal image built on a release tag. To view all available images visit [siebsie23/docker-postal/tags](https://hub.docker.com/r/siebsie23/docker-postal/tags) |
+| `main`        | Postal image built on the 'main' branch containing the latest and in-development features **(Stuff will break, use at your own risk!)**                       |
+| `latest`      | Latest postal v2 release                                                                                                                                       |
+| `2.*.*`       | Postal image built on a v2 release tag. To view all available images visit [siebsie23/docker-postal/tags](https://hub.docker.com/r/siebsie23/docker-postal/tags) |
 
 ### Build from Source
 Clone this repository and build the image with `make build POSTAL_VERSION="version"` version being a valid postal branch or tag.
