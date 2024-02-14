@@ -12,6 +12,12 @@ docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}";
 if [[ "${POSTAL_VERSION}" == "release" ]]; then
     POSTAL_VERSION=$(curl -s https://api.github.com/repos/postalserver/postal/releases/latest | jq -r .tag_name);
 
+    # Check if the fetched postal version is a 2.*.* version, if not, exit the script.
+    if [[ ! "${POSTAL_VERSION}" =~ ^2\.[0-9]+\.[0-9]+$ ]]; then
+        echo "The fetched postal version ${POSTAL_VERSION} is not a 2.*.* version";
+        exit 1;
+    fi
+
     # Check if the fetched postal version is already built, do not build it again.
     if [[ $(curl -s https://hub.docker.com/v2/repositories/siebsie23/docker-postal/tags/${POSTAL_VERSION} | jq -r .name) == "${POSTAL_VERSION}" ]]; then
         echo "Postal version ${POSTAL_VERSION} already exists in siebsie23/docker-postal";
