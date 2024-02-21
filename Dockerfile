@@ -1,4 +1,4 @@
-FROM docker.io/tiredofit/alpine:3.17
+FROM docker.io/tiredofit/alpine:3.19
 ARG POSTAL_VERSION="main"
 ARG POSTAL_COMMIT="304828a"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
