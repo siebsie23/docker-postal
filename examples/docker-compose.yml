@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   postal-app:
-    image: siebsie23/docker-postal:main
+    image: siebsie23/docker-postal:latest
     container_name: postal-app
     ports:
       - "25:25"
@@ -19,6 +19,7 @@ services:
       - /root/traefik/certs:/certs
     environment:
       - CONTAINER_NAME=postal-app
+      - CONTAINER_ENABLE_MONITORING=false
 
       - DB_HOST=postal-db
       - DB_PORT=3306
@@ -73,44 +74,32 @@ services:
     restart: always
 
   postal-db:
-    image: tiredofit/mariadb:latest
+    image: tiredofit/mariadb:10.11
     container_name: postal-db
     volumes:
+      - ./dbbackup:/backup
       - ./db:/var/lib/mysql
       - ./config/mariadb:/etc/mysql/conf.d
     environment:
+      - DB_CONFIGURATION=default
       - ROOT_PASS=postalrpass
       - DB_NAME=postal
       - DB_USER=postal
       - DB_PASS=postalpass
+      - DB_BACKUP=true
+      - DB_BACKUP_NAME=postal
+      - DB_BACKUP_USER=postal
+      - DB_BACKUP_PASS=postalpass
+      - DB_BACKUP_CLEANUP_TIME=10080
       - CONTAINER_NAME=postal-db
-    networks:
-      - services
-    restart: always
-
-  postal-db-backup:
-    image: tiredofit/db-backup:latest
-    container_name: postal-db-backup
-    links:
-      - postal-db
-    volumes:
-      - ./dbbackup:/backup
-    environment:
-      - CONTAINER_NAME=postal-db-backup
-      - DB_HOST=postal-db
-      - DB_TYPE=mariadb
-      - DB_NAME=postal
-      - DB_USER=postal
-      - DB_PASS=postalpass
-      - DEFAULT_CLEANUP_TIME=10080
-      - CONTAINER_ENABLE_MONITORING=FALSE
+      - CONTAINER_ENABLE_MONITORING=false
     networks:
       - services
     restart: always
 
   postal-rabbitmq:
     container_name: postal-rabbitmq
-    image: tiredofit/rabbitmq
+    image: rabbitmq:3
     environment:
       - RABBITMQ_DEFAULT_USER=postal
       - RABBITMQ_DEFAULT_PASS=password
@@ -128,6 +117,7 @@ services:
       - ./logs/clamav:/logs/
     environment:
       - CONTAINER_NAME=postal-clamav
+      - CONTAINER_ENABLE_MONITORING=false
     networks:
       - services
     restart: always
@@ -141,6 +131,7 @@ services:
       - ./data/spamassassin/data:/data/
     environment:
       - CONTAINER_NAME=postal-spamassassin
+      - CONTAINER_ENABLE_MONITORING=false
     networks:
       - services
     restart: always
