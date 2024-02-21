@@ -34,18 +34,23 @@ if [[ "${POSTAL_VERSION}" == "main" ]]; then
     SHORT_COMMIT=$(echo "${LATEST_COMMIT}" | cut -c1-7);
 
     # Pull the image from Docker Hub
-    docker pull siebsie23/docker-postal:main
+    docker pull siebsie23/docker-postal:main || true
 
-    # Get the image ID
-    IMAGE_ID=$(docker images -q siebsie23/docker-postal:main)
+    # Check if the image exists locally
+    if docker image inspect siebsie23/docker-postal:main >/dev/null 2>&1; then
+        # Get the image ID
+        IMAGE_ID=$(docker images -q siebsie23/docker-postal:main)
 
-    # Inspect the image and get the commit label
-    IMAGE_COMMIT=$(docker inspect --format '{{ index .Config.Labels "commit"}}' "${IMAGE_ID}")
+        # Inspect the image and get the commit label
+        IMAGE_COMMIT=$(docker inspect --format '{{ index .Config.Labels "commit"}}' "${IMAGE_ID}")
 
-    # Check if the commit label is the same as the latest commit
-    if [[ "${IMAGE_COMMIT}" == "${SHORT_COMMIT}" ]]; then
-        echo "The latest commit ${SHORT_COMMIT} is already built in siebsie23/docker-postal:main";
-        exit 0;
+        # Check if the commit label is the same as the latest commit
+        if [[ "${IMAGE_COMMIT}" == "${SHORT_COMMIT}" ]]; then
+            echo "The latest commit ${SHORT_COMMIT} is already built in siebsie23/docker-postal:main";
+            exit 0;
+        fi
+    else
+        echo "Failed to pull siebsie23/docker-postal:main, continuing with build..."
     fi
 fi
 
