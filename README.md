@@ -14,7 +14,6 @@ Docker-Postal is a Dockerfile to build a [Postal](https://github.com/postalserve
 * Contains Fail2Ban for blocking repeat authentication offenders
 
 ## Prerequisites
-- Required [RabbitMQ Server](https://github.com/tiredofit/docker-rabbitmq)
 - Required [MariaDB Server](https://github.com/tiredofit/docker-mariadb)
 
 ## Installation
@@ -122,11 +121,6 @@ Be sure to view the following repositories to understand all the customizable op
 | `DB_PASS`        | Password for Above User e.g. `password`                                                |         |
 | `DB_PORT`        | MariaDB Server Port                                                                    | `3306`  |
 | `DB_ROOT_PASS`   | Needed for first boot - Assigns privileges to $DB_USER. This is your MariaDB Root Pass |         |
-| `RABBITMQ_HOST`  | RabbitMQ Hostname or Container                                                         |         |
-| `RABBITMQ_VHOST` | RabbitMQ VHost shard                                                                   |         |
-| `RABBITMQ_USER`  | RabbitMQ Username                                                                      |         |
-| `RABBITMQ_PASS`  | RabbitMQ Password                                                                      |         |
-| `RABBITMQ_PORT`  | RabbitMQ Port                                                                          | `5672`  |
 
 #### Anti Spam Settings
 | Parameter             | Description                           | Default |

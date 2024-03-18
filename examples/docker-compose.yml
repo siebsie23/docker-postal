@@ -35,11 +35,6 @@ services:
       - ADMIN_LNAME=Admin
     ##
 
-      - RABBITMQ_HOST=postal-rabbitmq
-      - RABBITMQ_USER=postal
-      - RABBITMQ_PASS=password
-      - RABBITMQ_VHOST=/postal
-
       - ENABLE_SPAMASSASSIN=true
       - SPAMASSASSIN_HOST=postal-spamassassin
 
@@ -93,18 +88,6 @@ services:
       - DB_BACKUP_CLEANUP_TIME=10080
       - CONTAINER_NAME=postal-db
       - CONTAINER_ENABLE_MONITORING=false
-    networks:
-      - services
-    restart: always
-
-  postal-rabbitmq:
-    container_name: postal-rabbitmq
-    image: rabbitmq:3
-    environment:
-      - RABBITMQ_DEFAULT_USER=postal
-      - RABBITMQ_DEFAULT_PASS=password
-      - RABBITMQ_DEFAULT_VHOST=/postal
-      - CONTAINER_NAME=postal-rabbitmq
     networks:
       - services
     restart: always

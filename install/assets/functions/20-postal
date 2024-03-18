@@ -311,13 +311,6 @@ message_db:
   password: ${DB_PASS}
   prefix: ${DB_NAME}
 
-rabbitmq:
-  host: ${RABBITMQ_HOST}
-  port: ${RABBITMQ_PORT}
-  username: ${RABBITMQ_USER}
-  password: ${RABBITMQ_PASS}
-  vhost: ${RABBITMQ_VHOST}
-
 workers:
   quantity: ${WORKERS_AMOUNT}
   threads: ${WORKERS_THREADS}
@@ -396,21 +389,6 @@ EOF
   if [ -f "${CONFIG_PATH}"/"${SIGNING_KEY_FILE}" ] && [ ! -f "/app/config/signing.key" ] ; then
     ln -sf "${CONFIG_PATH}"/"${SIGNING_KEY_FILE}" /app/config/signing.key
   fi
-}
-
-check_rabbitmq() {
-  print_debug "Checking RabbitMQ"
-  sanity_var RABBITMQ_HOST "RabbitMQ Host"
-  sanity_var RABBITMQ_VHOST "RabbitMQ VHost"
-  sanity_var RABBITMQ_PASS "RabbitMQ Password"
-
-  print_debug "Checking to see if RabbitMQ Host: ${RABBITMQ_HOST} is accessible"
-  COUNTER=0
-  while ! (silent nc -z ${RABBITMQ_HOST} ${RABBITMQ_PORT}) ; do
-      sleep 5
-      let COUNTER+=5
-      print_warn "RabbitMQ Host '${RABBITMQ_HOST}' is not accessible, retrying.. ($COUNTER seconds so far)"
-  done
 }
 
 configure_tls() {
