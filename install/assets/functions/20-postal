@@ -239,8 +239,6 @@ configure_logging() {
   ln -sf "${LOG_PATH}" /app/log
     create_logrotate postal-production ${LOG_PATH}/production.log none postal postal
   if [ "${LOG_CONSOLE,,}" = "false" ] ; then
-    create_logrotate postal-cron ${LOG_PATH}/cron.log none postal postal
-    create_logrotate postal-requeuer ${LOG_PATH}/message_requeuer.log none postal postal
     create_logrotate postal-puma-access ${LOG_PATH}/puma-access.log none postal postal
     create_logrotate postal-puma-error ${LOG_PATH}/puma-error.log none postal postal
     create_logrotate postal-slowdb ${LOG_PATH}/slow_message_db_queries.log none postal postal
