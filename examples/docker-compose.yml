@@ -50,6 +50,15 @@ services:
       - DNS_DKIM_IDENTIFIER=postal
       - DNS_DOMAIN_VERIFY_PREFIX=kd-verify
 
+    ## Optional OIDC support
+      - OIDC_ENABLED=false
+      - OIDC_NAME=OIDC Provider
+      - OIDC_ISSUER=
+      - OIDC_CLIENT_IDENTIFIER=
+      - OIDC_CLIENT_SECRET=
+      - OIDC_SCOPES=openid,email
+    ##
+
       - SMTP_SERVER_ENABLE_TLS=true
       - SMTP_SERVER_TLS_CERT=/certs/certs/postal.example.com.crt
       - SMTP_SERVER_TLS_KEY=/certs/private/postal.example.com.key

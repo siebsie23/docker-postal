@@ -262,6 +262,12 @@ EOF
                                 )
       done
 
+    oidc_scope_array=$(echo $OIDC_SCOPES | tr "," "\n")
+      for scope in ${oidc_scope_array}
+      do
+          oidc_scope+="    - ${scope}"$'\n'
+      done
+
     if [ -z "${APP_SECRET}" ] ; then
       rails_secret_key=$(openssl rand -hex 128 | tr -d '\n')
     else
@@ -377,6 +383,24 @@ rspamd:
 smtp_client:
   open_timeout: ${SMTP_CLIENT_OPEN_TIMEOUT}
   read_timeout: ${SMTP_CLIENT_READ_TIMEOUT}
+
+oidc:
+  enabled: ${OIDC_ENABLED}
+  local_authentication_enabled: ${OIDC_LOCAL_AUTH_ENABLED}
+  name: ${OIDC_NAME}
+  issuer: ${OIDC_ISSUER}
+  identifier: ${OIDC_CLIENT_IDENTIFIER}
+  secret: ${OIDC_CLIENT_SECRET}
+  scopes:
+${oidc_scope}
+  uid_field: ${OIDC_UID_FIELD}
+  email_address_field: ${OIDC_EMAIL_ADDRESS_FIELD}
+  name_field: ${OIDC_NAME_FIELD}
+  discovery: ${OIDC_DISCOVERY}
+  authorization_endpoint: ${OIDC_AUTHORIZATION_ENDPOINT}
+  token_endpoint: ${OIDC_TOKEN_ENDPOINT}
+  userinfo_endpoint: ${OIDC_USERINFO_ENDPOINT}
+  jwks_uri: ${OIDC_JWKS_URI}
 EOF
   fi
 

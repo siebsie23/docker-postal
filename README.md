@@ -99,6 +99,25 @@ Be sure to view the following repositories to understand all the customizable op
 | `FAIL2BAN_TIME_BAN`  | Time to ban repeat offenders                    | `10m`                         |
 | `FAIL2BAN_MAX_RETRY` | Ban after how many tries during time period     | `5`                           |
 
+#### OIDC Settings
+| Parameter                     | Description                                                                                                  | Default         |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------- |
+| `OIDC_ENABLED`                | Enable OIDC authentication                                                                                   | `FALSE`         |
+| `OIDC_LOCAL_AUTH_ENABLED`     | Users with passwords will still be able to login locally, if disabled only OpenID Connect will be available. | `TRUE`          |
+| `OIDC_NAME`                   | The name of the OIDC provider as shown in the UI                                                             | `OIDC Provider` |
+| `OIDC_ISSUER`                 | The OIDC issuer URL provided to you by your Identity provider                                                |                 |
+| `OIDC_CLIENT_IDENTIFIER`      | The client ID for OIDC                                                                                       |                 |
+| `OIDC_CLIENT_SECRET`          | The client secret for OIDC                                                                                   |                 |
+| `OIDC_SCOPES`                 | Scopes to request from the OIDC server - Seperate multiple with commas                                       | `openid,email`  |
+| `OIDC_UID_FIELD`              | The field to use to determine the user's UID                                                                 | `sub`           |
+| `OIDC_EMAIL_ADDRESS_FIELD`    | The field to use to determine the user's email address                                                       | `email`         |
+| `OIDC_NAME_FIELD`             | The field to use to determine the user's name                                                                | `name`          |
+| `OIDC_DISCOVERY`              | Enable discovery to determine endpoints from .well-known/openid-configuration from the Issuer                | `TRUE`          |
+| `OIDC_AUTHORIZATION_ENDPOINT` | The authorize endpoint on the authorization server (only used when discovery is `FALSE`)                     |                 |
+| `OIDC_TOKEN_ENDPOINT`         | The token endpoint on the authorization server (only used when discovery is `FALSE`)                         |                 |
+| `OIDC_USERINFO_ENDPOINT`      | The user info endpoint on the authorization server (only used when discovery is `FALSE`)                     |                 |
+| `OIDC_JWKS_URI`               | The JWKS endpoint on the authorization server (only used when discovery is `FALSE`)                          |                 |
+
 #### Performance Settings
 | Parameter         | Description                  | Default |
 | ----------------- | ---------------------------- | ------- |
