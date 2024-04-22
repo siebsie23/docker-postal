@@ -270,113 +270,154 @@ EOF
 
     print_debug "Writing Configuration to ${CONFIG_PATH}/${CONFIG_FILE}"
     cat <<EOF > "${CONFIG_PATH}"/"${CONFIG_FILE}"
-web:
-  host: ${WEB_HOST}
-  protocol: ${WEB_PROTOCOL}
+version: 2
 
-general:
+postal:
+  web_hostname: postal.example.com
+  web_protocol: https
+  smtp_hostname: postal.example.com
   use_ip_pools: false
-  exception_url:
-  maximum_delivery_attempts: ${MAX_DELIVERY_ATTEMPTS}
-  maximum_hold_expiry_days: ${MAX_HOLD_EXPIRY_DAYS}
-  suppression_list_removal_delay: ${SUPPRESSION_LIST_EXPIRY}
-  use_local_ns_for_domains: false
-  default_spam_threshold: ${SPAM_THRESHOLD}
-  default_spam_failure_threshold: ${SPAM_FAILURE_THRESHOLD}
+  default_maximum_delivery_attempts: 18
+  default_maximum_hold_expiry_days: 7
+  default_suppression_list_automatic_removal_days: 30
+  default_spam_threshold: 5
+  default_spam_failure_threshold: 20
+  use_local_ns_for_domain_verification: false
+  use_resent_sender_header: true
+  signing_key_path: $config-file-root/signing.key
+  smtp_relays: []
+  trusted_proxies: []
+  queued_message_lock_stale_days: 1
+  batch_queued_messages: true
 
 web_server:
-  bind_address: ${WEB_BIND_IP}
-  port: ${WEB_BIND_PORT}
-  max_threads: ${WEB_MAX_THREADS}
+  default_port: 5000
+  default_bind_address: 127.0.0.1
+  max_threads: 5
+
+worker:
+  default_health_server_port: 9090
+  default_health_server_bind_address: 127.0.0.1
+  threads: 2
 
 main_db:
-  host: ${DB_HOST}
-  port: ${DB_PORT}
-  username: ${DB_USER}
-  password: ${DB_PASS}
-  database: ${DB_NAME}
-  pool_size: ${DB_POOL_SIZE}
-
-logging:
-  stdout: ${LOG_CONSOLE}
-  root: ${LOG_PATH}
-  max_log_file_size: ${LOG_SIZE_MAX}
+  host: localhost
+  port: 3306
+  username: postal
+  password: 
+  database: postal
+  pool_size: 5
+  encoding: utf8mb4
 
 message_db:
-  host: ${DB_HOST}
-  port: ${DB_PORT}
-  username: ${DB_USER}
-  password: ${DB_PASS}
-  prefix: ${DB_NAME}
+  host: localhost
+  port: 3306
+  username: postal
+  password: 
+  encoding: utf8mb4
+  database_name_prefix: postal
 
-workers:
-  quantity: ${WORKERS_AMOUNT}
-  threads: ${WORKERS_THREADS}
+logging:
+  rails_log_enabled: false
+  sentry_dsn: 
+  enabled: true
+  highlighting_enabled: false
+
+gelf:
+  host: 
+  port: 12201
+  facility: postal
 
 smtp_server:
-  port: ${SMTP_SERVER_PORT}
-  bind_adress: '::'
-  tls_enabled: ${SMTP_SERVER_ENABLE_TLS}
-  tls_certificate_path: ${SMTP_SERVER_TLS_CERT}
-  tls_private_key_path: ${SMTP_SERVER_TLS_KEY}
-  tls_ciphers: ${SMTP_SERVER_TLS_CIPHERS}
-  ssl_version: ${SMTP_SERVER_SSL_VERSION}
-  proxy_protocol: ${SMTP_SERVER_PROXY_PROTOCOL}
-  log_connect: ${SMTP_SERVER_LOG_CONNECTIONS}
-  strip_received_headers: ${SMTP_SERVER_STRIP_RECEIVED_HEADERS}
-  max_message_size: ${SMTP_SERVER_MAX_MESSAGE_SIZE}
-
-smtp_relays:
-  -
-    hostname: ${SMTP_RELAY_HOST}
-    port: ${SMTP_RELAY_PORT}
-    ssl_mode: ${SMTP_RELAY_SSL_MODE}
+  default_port: 25
+  default_bind_address: ::
+  default_health_server_port: 9091
+  default_health_server_bind_address: 127.0.0.1
+  tls_enabled: false
+  tls_certificate_path: $config-file-root/smtp.cert
+  tls_private_key_path: $config-file-root/smtp.key
+  tls_ciphers: 
+  ssl_version: SSLv23
+  proxy_protocol: false
+  log_connections: false
+  max_message_size: 14
+  log_ip_address_exclusion_matcher: 
 
 dns:
   mx_records:
-${mx_record}
-  smtp_server_hostname: ${DNS_HOSTNAME}
-  spf_include: ${DNS_SPF}
-  return_path: ${DNS_RETURN_PATH}
-  route_domain: ${DNS_ROUTE_DOMAIN}
-  track_domain: ${DNS_TRACK_DOMAIN}
-  dkim_identifier: ${DNS_DKIM_IDENTIFIER}
-  domain_verify_prefix: ${DNS_DOMAIN_VERIFY_PREFIX}
-  custom_return_path_prefix: ${DNS_RETURN_PATH_PREFIX}
+    - mx1.postal.example.com
+    - mx2.postal.example.com
+  spf_include: spf.postal.example.com
+  return_path_domain: rp.postal.example.com
+  route_domain: routes.postal.example.com
+  track_domain: track.postal.example.com
+  helo_hostname: 
+  dkim_identifier: postal
+  domain_verify_prefix: postal-verification
+  custom_return_path_prefix: psrp
+  timeout: 5
+  resolv_conf_path: /etc/resolv.conf
 
 smtp:
-  host: ${SMTP_HOST}
-  port: ${SMTP_PORT}
-  username: ${SMTP_USER}
-  password: ${SMTP_PASS}
-  from_name: ${SMTP_FROM_NAME}
-  from_address: ${SMTP_FROM_ADDRESS}
+  host: 127.0.0.1
+  port: 25
+  username: 
+  password: 
+  authentication_type: login
+  enable_starttls: false
+  enable_starttls_auto: true
+  openssl_verify_mode: peer
+  from_name: Postal
+  from_address: postal@example.com
 
 rails:
   environment: production
-  secret_key: ${rails_secret_key}
-
-spamd:
-  enabled: ${ENABLE_SPAMASSASSIN}
-  host: ${SPAMASSASSIN_HOST}
-  port: ${SPAMASSASSIN_PORT}
-
-clamav:
-  enabled: ${ENABLE_CLAMAV}
-  host: ${CLAMAV_HOST}
-  port: ${CLAMAV_PORT}
+  secret_key: 
 
 rspamd:
-  enabled: ${ENABLE_RSPAMD}
-  host: ${RSPAMD_HOST}
-  port: ${RSPAMD_PORT}
-  ssl: ${RSPAMD_SSL}
-  password: ${RSPAMD_PASS}
-  flags: ${RSPAMD_FLAGS}
+  enabled: false
+  host: 127.0.0.1
+  port: 11334
+  ssl: false
+  password: 
+  flags: 
+
+spamd:
+  enabled: false
+  host: 127.0.0.1
+  port: 783
+
+clamav:
+  enabled: false
+  host: 127.0.0.1
+  port: 2000
 
 smtp_client:
-  open_timeout: ${SMTP_CLIENT_OPEN_TIMEOUT}
-  read_timeout: ${SMTP_CLIENT_READ_TIMEOUT}
+  open_timeout: 30
+  read_timeout: 30
+
+migration_waiter:
+  enabled: false
+  attempts: 120
+  sleep_time: 2
+
+oidc:
+  enabled: false
+  local_authentication_enabled: true
+  name: OIDC Provider
+  issuer: 
+  identifier: 
+  secret: 
+  scopes:
+    - openid,email
+  uid_field: sub
+  email_address_field: email
+  name_field: name
+  discovery: true
+  authorization_endpoint: 
+  token_endpoint: 
+  userinfo_endpoint: 
+  jwks_uri: 
 EOF
   fi
 
