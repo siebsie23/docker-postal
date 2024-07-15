@@ -48,3 +48,4 @@ If a variable has been removed, the table below will show it as a `-`
 | `WEB_BIND_PORT`               | `WEB_PORT`                            |
 | -                             | `WORKER_HEALTH_SERVER_BIND_ADDRESS`   |
 | -                             | `WORKER_HEALTH_SERVER_PORT`           |
+| `WEB_HOST`                    | `WEB_HOSTNAME`                        |
