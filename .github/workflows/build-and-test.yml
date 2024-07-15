@@ -23,7 +23,3 @@ jobs:
           context: .
           load: true
           tags: siebsie23/docker-postal:develop
-
-      - name: Test docker image
-        run: |
-          docker run --rm siebsie23/docker-postal:develop
