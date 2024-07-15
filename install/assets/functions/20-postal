@@ -277,11 +277,11 @@ postal:
   web_protocol: ${WEB_PROTOCOL}
   smtp_hostname: ${SMTP_HOSTNAME}
   use_ip_pools: ${USE_IP_POOLS}
-  default_maximum_delivery_attempts: ${DEFAULT_MAXIMUM_DELIVERY_ATTEMPTS}
-  default_maximum_hold_expiry_days: ${DEFAULT_MAXIMUM_HOLD_EXPIRY_DAYS}
-  default_suppression_list_automatic_removal_days: ${DEFAULT_SUPPRESSION_LIST_AUTOMATIC_REMOVAL_DAYS}
-  default_spam_threshold: ${DEFAULT_SPAM_THRESHOLD}
-  default_spam_failure_threshold: ${DEFAULT_SPAM_FAILURE_THRESHOLD}
+  default_maximum_delivery_attempts: ${MAXIMUM_DELIVERY_ATTEMPTS}
+  default_maximum_hold_expiry_days: ${MAXIMUM_HOLD_EXPIRY_DAYS}
+  default_suppression_list_automatic_removal_days: ${SUPPRESSION_LIST_AUTOMATIC_REMOVAL_DAYS}
+  default_spam_threshold: ${SPAM_THRESHOLD}
+  default_spam_failure_threshold: ${SPAM_FAILURE_THRESHOLD}
   use_local_ns_for_domain_verification: ${USE_LOCAL_NS_FOR_DOMAIN_VERIFICATION}
   use_resent_sender_header: ${USE_RESENT_SENDER_HEADER}
   signing_key_path: $config-file-root/signing.key
