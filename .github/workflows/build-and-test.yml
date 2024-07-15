@@ -1,0 +1,29 @@
+name: Build and test docker image
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: siebsie23/docker-postal:develop
+
+      - name: Test docker image
+        run: |
+          docker run --rm siebsie23/docker-postal:develop
