@@ -35,23 +35,18 @@ services:
       - ADMIN_LNAME=Admin
     ##
 
-      - RABBITMQ_HOST=postal-rabbitmq
-      - RABBITMQ_USER=postal
-      - RABBITMQ_PASS=password
-      - RABBITMQ_VHOST=/postal
-
       - ENABLE_SPAMASSASSIN=true
       - SPAMASSASSIN_HOST=postal-spamassassin
 
       - ENABLE_CLAMAV=true
       - CLAMAV_HOST=postal-clamav
 
-      - DNS_HOSTNAME=postal.example.com
+      - DNS_HELO_HOSTNAME=postal.example.com
       - DNS_MX=postal.example.com
-      - DNS_RETURN_PATH=rp.postal.example.com
+      - DNS_RETURN_PATH_DOMAIN=rp.postal.example.com
       - DNS_ROUTE_DOMAIN=routes.postal.example.com
       - DNS_TRACK_DOMAIN=postal.example.com
-      - DNS_SPF=spf.postal.example.com
+      - DNS_SPF_INCLUDE=spf.postal.example.com
       - DNS_DKIM_IDENTIFIER=postal
       - DNS_DOMAIN_VERIFY_PREFIX=kd-verify
 
@@ -65,7 +60,7 @@ services:
       - SMTP_USER=   ## Fill these in after you have a working installation and server to be able to invite users
       - SMTP_PASS=   ##
 
-      - WEB_HOST=postal.example.com
+      - WEB_HOSTNAME=postal.example.com
       - WEB_PROTOCOL=https
 
     networks:
@@ -93,18 +88,6 @@ services:
       - DB_BACKUP_CLEANUP_TIME=10080
       - CONTAINER_NAME=postal-db
       - CONTAINER_ENABLE_MONITORING=false
-    networks:
-      - services
-    restart: always
-
-  postal-rabbitmq:
-    container_name: postal-rabbitmq
-    image: rabbitmq:3
-    environment:
-      - RABBITMQ_DEFAULT_USER=postal
-      - RABBITMQ_DEFAULT_PASS=password
-      - RABBITMQ_DEFAULT_VHOST=/postal
-      - CONTAINER_NAME=postal-rabbitmq
     networks:
       - services
     restart: always

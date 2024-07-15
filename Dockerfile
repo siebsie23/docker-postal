@@ -1,6 +1,6 @@
-FROM docker.io/tiredofit/alpine:3.19
+FROM docker.io/tiredofit/alpine:3.20
 ARG POSTAL_VERSION="main"
-ARG POSTAL_COMMIT="304828a"
+ARG POSTAL_COMMIT="da90e75"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
 LABEL commit="$POSTAL_COMMIT"
 
@@ -35,7 +35,7 @@ RUN set -x && \
             ruby-io-console \
             && \
     \
-    gem install bundler -v 2.5.5 && \
+    gem install bundler -v 2.5.6 && \
     \
     ### Fetch Source and install Ruby Dependencies
     git clone --depth 1 --branch $POSTAL_VERSION https://github.com/postalserver/postal /app/ && \

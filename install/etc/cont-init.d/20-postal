@@ -6,7 +6,6 @@ prepare_service
 sanity_db
 db_ready mariadb
 check_clamav
-check_rabbitmq
 check_rspamd
 check_spamassassin
 bootstrap

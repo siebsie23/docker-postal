@@ -239,8 +239,6 @@ configure_logging() {
   ln -sf "${LOG_PATH}" /app/log
     create_logrotate postal-production ${LOG_PATH}/production.log none postal postal
   if [ "${LOG_CONSOLE,,}" = "false" ] ; then
-    create_logrotate postal-cron ${LOG_PATH}/cron.log none postal postal
-    create_logrotate postal-requeuer ${LOG_PATH}/message_requeuer.log none postal postal
     create_logrotate postal-puma-access ${LOG_PATH}/puma-access.log none postal postal
     create_logrotate postal-puma-error ${LOG_PATH}/puma-error.log none postal postal
     create_logrotate postal-slowdb ${LOG_PATH}/slow_message_db_queries.log none postal postal
@@ -272,24 +270,35 @@ EOF
 
     print_debug "Writing Configuration to ${CONFIG_PATH}/${CONFIG_FILE}"
     cat <<EOF > "${CONFIG_PATH}"/"${CONFIG_FILE}"
-web:
-  host: ${WEB_HOST}
-  protocol: ${WEB_PROTOCOL}
+version: 2
 
-general:
-  use_ip_pools: false
-  exception_url:
-  maximum_delivery_attempts: ${MAX_DELIVERY_ATTEMPTS}
-  maximum_hold_expiry_days: ${MAX_HOLD_EXPIRY_DAYS}
-  suppression_list_removal_delay: ${SUPPRESSION_LIST_EXPIRY}
-  use_local_ns_for_domains: false
+postal:
+  web_hostname: ${WEB_HOSTNAME}
+  web_protocol: ${WEB_PROTOCOL}
+  smtp_hostname: ${SMTP_SERVER_HOSTNAME}
+  use_ip_pools: ${USE_IP_POOLS}
+  default_maximum_delivery_attempts: ${MAXIMUM_DELIVERY_ATTEMPTS}
+  default_maximum_hold_expiry_days: ${MAXIMUM_HOLD_EXPIRY_DAYS}
+  default_suppression_list_automatic_removal_days: ${SUPPRESSION_LIST_AUTOMATIC_REMOVAL_DAYS}
   default_spam_threshold: ${SPAM_THRESHOLD}
   default_spam_failure_threshold: ${SPAM_FAILURE_THRESHOLD}
+  use_local_ns_for_domain_verification: ${USE_LOCAL_NS_FOR_DOMAIN_VERIFICATION}
+  use_resent_sender_header: ${USE_RESENT_SENDER_HEADER}
+  signing_key_path: $config-file-root/signing.key
+  smtp_relays: []
+  trusted_proxies: []
+  queued_message_lock_stale_days: ${QUEUED_MESSAGE_LOCK_STALE_DAYS}
+  batch_queued_messages: ${BATCH_QUEUED_MESSAGES}
 
 web_server:
-  bind_address: ${WEB_BIND_IP}
-  port: ${WEB_BIND_PORT}
+  default_port: ${WEB_PORT}
+  default_bind_address: ${WEB_BIND_ADDRESS}
   max_threads: ${WEB_MAX_THREADS}
+
+worker:
+  default_health_server_port: ${WORKER_HEALTH_SERVER_PORT}
+  default_health_server_bind_address: ${WORKER_HEALTH_SERVER_BIND_ADDRESS}
+  threads: ${WORKER_THREADS}
 
 main_db:
   host: ${DB_HOST}
@@ -298,82 +307,71 @@ main_db:
   password: ${DB_PASS}
   database: ${DB_NAME}
   pool_size: ${DB_POOL_SIZE}
-
-logging:
-  stdout: ${LOG_CONSOLE}
-  root: ${LOG_PATH}
-  max_log_file_size: ${LOG_SIZE_MAX}
+  encoding: utf8mb4
 
 message_db:
   host: ${DB_HOST}
   port: ${DB_PORT}
   username: ${DB_USER}
   password: ${DB_PASS}
-  prefix: ${DB_NAME}
+  encoding: utf8mb4
+  database_name_prefix: ${DB_NAME}
 
-rabbitmq:
-  host: ${RABBITMQ_HOST}
-  port: ${RABBITMQ_PORT}
-  username: ${RABBITMQ_USER}
-  password: ${RABBITMQ_PASS}
-  vhost: ${RABBITMQ_VHOST}
+logging:
+  rails_log_enabled: false
+  sentry_dsn: 
+  enabled: true
+  highlighting_enabled: false
 
-workers:
-  quantity: ${WORKERS_AMOUNT}
-  threads: ${WORKERS_THREADS}
+gelf:
+  host: 
+  port: 12201
+  facility: postal
 
 smtp_server:
-  port: ${SMTP_SERVER_PORT}
-  bind_adress: '::'
+  default_port: ${SMTP_SERVER_PORT}
+  default_bind_address: '::'
+  default_health_server_port: 9091
+  default_health_server_bind_address: 127.0.0.1
   tls_enabled: ${SMTP_SERVER_ENABLE_TLS}
   tls_certificate_path: ${SMTP_SERVER_TLS_CERT}
   tls_private_key_path: ${SMTP_SERVER_TLS_KEY}
   tls_ciphers: ${SMTP_SERVER_TLS_CIPHERS}
-  ssl_version: ${SMTP_SERVER_SSL_VERSION}
+  ssl_version: ${SMTP_SERVER_TLS_SSL_VERSION}
   proxy_protocol: ${SMTP_SERVER_PROXY_PROTOCOL}
-  log_connect: ${SMTP_SERVER_LOG_CONNECTIONS}
-  strip_received_headers: ${SMTP_SERVER_STRIP_RECEIVED_HEADERS}
+  log_connections: ${SMTP_SERVER_LOG_CONNECTIONS}
   max_message_size: ${SMTP_SERVER_MAX_MESSAGE_SIZE}
-
-smtp_relays:
-  -
-    hostname: ${SMTP_RELAY_HOST}
-    port: ${SMTP_RELAY_PORT}
-    ssl_mode: ${SMTP_RELAY_SSL_MODE}
+  log_ip_address_exclusion_matcher: 
 
 dns:
   mx_records:
-${mx_record}
-  smtp_server_hostname: ${DNS_HOSTNAME}
-  spf_include: ${DNS_SPF}
-  return_path: ${DNS_RETURN_PATH}
+    - ${DNS_MX}
+  spf_include: ${DNS_SPF_INCLUDE}
+  return_path_domain: ${DNS_RETURN_PATH_DOMAIN}
   route_domain: ${DNS_ROUTE_DOMAIN}
   track_domain: ${DNS_TRACK_DOMAIN}
+  helo_hostname: ${DNS_HELO_HOSTNAME}
   dkim_identifier: ${DNS_DKIM_IDENTIFIER}
   domain_verify_prefix: ${DNS_DOMAIN_VERIFY_PREFIX}
   custom_return_path_prefix: ${DNS_RETURN_PATH_PREFIX}
+  timeout: ${DNS_TIMEOUT}
+  resolv_conf_path: /etc/resolv.conf
 
 smtp:
   host: ${SMTP_HOST}
   port: ${SMTP_PORT}
   username: ${SMTP_USER}
   password: ${SMTP_PASS}
+  authentication_type: login
+  enable_starttls: false
+  enable_starttls_auto: true
+  openssl_verify_mode: peer
   from_name: ${SMTP_FROM_NAME}
   from_address: ${SMTP_FROM_ADDRESS}
 
 rails:
   environment: production
-  secret_key: ${rails_secret_key}
-
-spamd:
-  enabled: ${ENABLE_SPAMASSASSIN}
-  host: ${SPAMASSASSIN_HOST}
-  port: ${SPAMASSASSIN_PORT}
-
-clamav:
-  enabled: ${ENABLE_CLAMAV}
-  host: ${CLAMAV_HOST}
-  port: ${CLAMAV_PORT}
+  secret_key: ${RAILS_SECRET_KEY}
 
 rspamd:
   enabled: ${ENABLE_RSPAMD}
@@ -383,9 +381,42 @@ rspamd:
   password: ${RSPAMD_PASS}
   flags: ${RSPAMD_FLAGS}
 
+spamd:
+  enabled: ${ENABLE_SPAMASSASIN}
+  host: ${SPAMASSASIN_HOST}
+  port: ${SPAMASSASIN_PORT}
+
+clamav:
+  enabled: ${ENABLE_CLAMAV}
+  host: ${CLAMAV_HOST}
+  port: ${CLAMAV_PORT}
+
 smtp_client:
   open_timeout: ${SMTP_CLIENT_OPEN_TIMEOUT}
   read_timeout: ${SMTP_CLIENT_READ_TIMEOUT}
+
+migration_waiter:
+  enabled: false
+  attempts: 120
+  sleep_time: 2
+
+oidc:
+  enabled: false
+  local_authentication_enabled: true
+  name: OIDC Provider
+  issuer: 
+  identifier: 
+  secret: 
+  scopes:
+    - openid,email
+  uid_field: sub
+  email_address_field: email
+  name_field: name
+  discovery: true
+  authorization_endpoint: 
+  token_endpoint: 
+  userinfo_endpoint: 
+  jwks_uri: 
 EOF
   fi
 
@@ -396,21 +427,6 @@ EOF
   if [ -f "${CONFIG_PATH}"/"${SIGNING_KEY_FILE}" ] && [ ! -f "/app/config/signing.key" ] ; then
     ln -sf "${CONFIG_PATH}"/"${SIGNING_KEY_FILE}" /app/config/signing.key
   fi
-}
-
-check_rabbitmq() {
-  print_debug "Checking RabbitMQ"
-  sanity_var RABBITMQ_HOST "RabbitMQ Host"
-  sanity_var RABBITMQ_VHOST "RabbitMQ VHost"
-  sanity_var RABBITMQ_PASS "RabbitMQ Password"
-
-  print_debug "Checking to see if RabbitMQ Host: ${RABBITMQ_HOST} is accessible"
-  COUNTER=0
-  while ! (silent nc -z ${RABBITMQ_HOST} ${RABBITMQ_PORT}) ; do
-      sleep 5
-      let COUNTER+=5
-      print_warn "RabbitMQ Host '${RABBITMQ_HOST}' is not accessible, retrying.. ($COUNTER seconds so far)"
-  done
 }
 
 configure_tls() {
