@@ -382,9 +382,9 @@ rspamd:
   flags: ${RSPAMD_FLAGS}
 
 spamd:
-  enabled: ${ENABLE_SPAMASSASIN}
-  host: ${SPAMASSASIN_HOST}
-  port: ${SPAMASSASIN_PORT}
+  enabled: ${ENABLE_SPAMASSASSIN}
+  host: ${SPAMASSASSIN_HOST}
+  port: ${SPAMASSASSIN_PORT}
 
 clamav:
   enabled: ${ENABLE_CLAMAV}
