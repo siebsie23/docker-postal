@@ -1,5 +1,10 @@
 name: Build and push docker images
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0 * * *'
+
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
