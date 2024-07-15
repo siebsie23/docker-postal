@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv /bin/bash
 
+CONFIG_FILE=${CONFIG_FILE:-"postal.yml"}
+CONFIG_PATH=${CONFIG_PATH:-"/config/"}
 WEB_HOSTNAME=${WEB_HOSTNAME:-"postal.example.com"}
 WEB_PROTOCOL=${WEB_PROTOCOL:-"https"}
 USE_IP_POOLS=${USE_IP_POOLS:-"false"}
