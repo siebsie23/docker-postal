@@ -2,6 +2,9 @@
 
 CONFIG_FILE=${CONFIG_FILE:-"postal.yml"}
 CONFIG_PATH=${CONFIG_PATH:-"/config/"}
+LOG_CONSOLE=${LOG_CONSOLE:-false}
+LOG_PATH=${LOG_PATH:-"/logs/"}
+LOG_SIZE_MAX=${LOG_SIZE_MAX:-9999}
 WEB_HOSTNAME=${WEB_HOSTNAME:-"postal.example.com"}
 WEB_PROTOCOL=${WEB_PROTOCOL:-"https"}
 USE_IP_POOLS=${USE_IP_POOLS:-"false"}
