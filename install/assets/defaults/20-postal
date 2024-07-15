@@ -38,6 +38,7 @@ DNS_SPF_INCLUDE=${DNS_SPF_INCLUDE:-"spf.postal.example.com"}
 DNS_RETURN_PATH_DOMAIN=${DNS_RETURN_PATH_DOMAIN:-"rp.postal.example.com"}
 DNS_ROUTE_DOMAIN=${DNS_ROUTE_DOMAIN:-"route.postal.example.com"}
 DNS_TRACK_DOMAIN=${DNS_TRACK_DOMAIN:-"track.postal.example.com"}
+DNS_HELO_HOSTNAME=${DNS_HELO_HOSTNAME:-"postal.example.com"}
 DNS_DKIM_IDENTIFIER=${DNS_DKIM_IDENTIFIER:-"postal"}
 DNS_DOMAIN_VERIFY_PREFIX=${DNS_DOMAIN_VERIFY_PREFIX:-"postal-verification"}
 DNS_TIMEOUT=${DNS_TIMEOUT:-"5"}
