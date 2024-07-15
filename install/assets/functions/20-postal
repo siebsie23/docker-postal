@@ -345,7 +345,7 @@ smtp_server:
 
 dns:
   mx_records:
-    - ${MX_RECORD}
+    - ${DNS_MX}
   spf_include: ${DNS_SPF_INCLUDE}
   return_path_domain: ${DNS_RETURN_PATH_DOMAIN}
   route_domain: ${DNS_ROUTE_DOMAIN}
