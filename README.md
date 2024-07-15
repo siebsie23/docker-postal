@@ -191,7 +191,7 @@ Be sure to view the following repositories to understand all the customizable op
 | Parameter                   | Description                                                                  | Default              |
 | --------------------------- | ---------------------------------------------------------------------------- | -------------------- |
 | `CONFIG_FILE`               | Configuration File                                                           | `postal.yml`         |
-| `CONFIG_PATH`               | Configuration Path                                                           | `/config/`           |
+| `CONFIG_PATH`               | Configuration Path                                                           | `/config/postal/`    |
 | `FAST_SERVER_BIND_IP`       | Bind IP for the Web Interface                                                | `0.0.0.0`            |
 | `FAST_SERVER_BIND_PORT_TLS` | Bind Port for the TLS Tracking Service                                       | `8443`               |
 | `FAST_SERVER_BIND_PORT`     | Bind Port for the Tracking Server                                            | `8080`               |

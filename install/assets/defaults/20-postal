@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv /bin/bash
 
 CONFIG_FILE=${CONFIG_FILE:-"postal.yml"}
-CONFIG_PATH=${CONFIG_PATH:-"/config/"}
+CONFIG_PATH=${CONFIG_PATH:-"/config/postal/"}
 LOG_CONSOLE=${LOG_CONSOLE:-false}
 LOG_PATH=${LOG_PATH:-"/logs/"}
 LOG_SIZE_MAX=${LOG_SIZE_MAX:-9999}
