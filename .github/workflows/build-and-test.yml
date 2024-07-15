@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false
+          load: true
           tags: siebsie23/docker-postal:develop
 
       - name: Test docker image
