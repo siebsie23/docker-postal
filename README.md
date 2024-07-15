@@ -157,18 +157,18 @@ Be sure to view the following repositories to understand all the customizable op
 | `SMTP_CLIENT_READ_TIMEOUT` | Timeout for Reading Data in seconds       | `30`    |
 
 ##### Server
-| Parameter                            | Description                                        | Default             |
-| ------------------------------------ | -------------------------------------------------- | ------------------- |
-| `SMTP_SERVER_HOSTNAME`               | SMTP Server hostname                               | `postal.examle.com` |
-| `SMTP_SERVER_ENABLE_TLS`             | Enable TLS                                         | `false`             |
-| `SMTP_SERVER_LOG_CONNECTIONS`        | Log SMTP Connections                               | `false`             |
-| `SMTP_SERVER_MAX_MESSAGE_SIZE`       | Max message size in Megabytes                      | `50`                |
-| `SMTP_SERVER_PORT`                   | Listening Port for Postal Main SMTP Server         | `25`                |
-| `SMTP_SERVER_PROXY_PROTOCOL`         | Utilize Proxy Protocol                             | `false`             |
-| `SMTP_SERVER_TLS_SSL_VERSION`        | SSL Versions                                       | `SSLv23`            |
-| `SMTP_SERVER_TLS_CERT`               | TLS Cert Location (Will authgenerate if not exist) | `/certs/cert.pem`   |
-| `SMTP_SERVER_TLS_CIPHERS`            | TLS Ciphers to use                                 |                     |
-| `SMTP_SERVER_TLS_KEY`                | TLS Key Location (Will autogenerate if not exist)  | `/certs/key.pem`    |
+| Parameter                            | Description                                        | Default              |
+| ------------------------------------ | -------------------------------------------------- | -------------------- |
+| `SMTP_SERVER_HOSTNAME`               | SMTP Server hostname                               | `$DNS_HELO_HOSTNAME` |
+| `SMTP_SERVER_ENABLE_TLS`             | Enable TLS                                         | `false`              |
+| `SMTP_SERVER_LOG_CONNECTIONS`        | Log SMTP Connections                               | `false`              |
+| `SMTP_SERVER_MAX_MESSAGE_SIZE`       | Max message size in Megabytes                      | `50`                 |
+| `SMTP_SERVER_PORT`                   | Listening Port for Postal Main SMTP Server         | `25`                 |
+| `SMTP_SERVER_PROXY_PROTOCOL`         | Utilize Proxy Protocol                             | `false`              |
+| `SMTP_SERVER_TLS_SSL_VERSION`        | SSL Versions                                       | `SSLv23`             |
+| `SMTP_SERVER_TLS_CERT`               | TLS Cert Location (Will authgenerate if not exist) | `/certs/cert.pem`    |
+| `SMTP_SERVER_TLS_CIPHERS`            | TLS Ciphers to use                                 |                      |
+| `SMTP_SERVER_TLS_KEY`                | TLS Key Location (Will autogenerate if not exist)  | `/certs/key.pem`     |
 
 ##### Management System
 | Parameter           | Description                                                                    | Default                 |
