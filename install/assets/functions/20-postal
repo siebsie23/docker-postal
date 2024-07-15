@@ -353,7 +353,7 @@ dns:
   helo_hostname: ${DNS_HELO_HOSTNAME}
   dkim_identifier: ${DNS_DKIM_IDENTIFIER}
   domain_verify_prefix: ${DNS_DOMAIN_VERIFY_PREFIX}
-  custom_return_path_prefix: ${DNS_DOMAIN_VERIFY_PREFIX}
+  custom_return_path_prefix: ${DNS_RETURN_PATH_PREFIX}
   timeout: ${DNS_TIMEOUT}
   resolv_conf_path: /etc/resolv.conf
 
