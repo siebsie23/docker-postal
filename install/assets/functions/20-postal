@@ -275,7 +275,7 @@ version: 2
 postal:
   web_hostname: ${WEB_HOSTNAME}
   web_protocol: ${WEB_PROTOCOL}
-  smtp_hostname: ${SMTP_HOSTNAME}
+  smtp_hostname: ${SMTP_SERVER_HOSTNAME}
   use_ip_pools: ${USE_IP_POOLS}
   default_maximum_delivery_attempts: ${MAXIMUM_DELIVERY_ATTEMPTS}
   default_maximum_hold_expiry_days: ${MAXIMUM_HOLD_EXPIRY_DAYS}

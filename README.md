@@ -70,25 +70,24 @@ Be sure to view the following repositories to understand all the customizable op
 | ADMIN_LNAME | Name of Admin Last Name  | `Admin`              |
 | ADMIN_PASS  | Password of Admin user   | `PostalMailServer`   |
 #### Application Settings
-| Parameter                 | Description                              | Default |
-| ------------------------- | ---------------------------------------- | ------- |
-| `ENABLE_TRACKING`         | Enable Click Tracking `true` or `false`  | `true`  |
-| `MAX_DELIVERY_ATTEMPTS`   | Maximum Delivery Attempts before failing | `18`    |
-| `MAX_HOLD_EXPIRY_DAYS`    | Maximum Holding days before expiring     | `7`     |
-| `SUPPRESSION_LIST_EXPIRY` | Suppression List expiry in days          | `30`    |
+| Parameter                                 | Description                              | Default |
+| ----------------------------------------- | ---------------------------------------- | ------- |
+| `MAXIMUM_DELIVERY_ATTEMPTS`               | Maximum Delivery Attempts before failing | `18`    |
+| `MAXIMUM_HOLD_EXPIRY_DAYS`                | Maximum Holding days before expiring     | `7`     |
+| `SUPPRESSION_LIST_AUTOMATIC_REMOVAL_DAYS` | Suppression List expiry in days          | `30`    |
 
 #### DNS Settings
-| Parameter                  | Description                                         | Default                |
-| -------------------------- | --------------------------------------------------- | ---------------------- |
-| `DNS_HOSTNAME`             | Domain Name Mail Server                             | `example.com`          |
-| `DNS_MX`                   | MX Record Hostnames - Seperate multiple with commas |                        |
-| `DNS_SPF`                  | SPF Hostname                                        | `spf.$DNS_HOSTNAME`    |
-| `DNS_RETURN_PATH`          | Return path Hostname                                | `rp.$DNS_HOSTNAME`     |
-| `DNS_ROUTE_DOMAIN`         | `Routing Domain`                                    | `routes.$DNS_HOSTNAME` |
-| `DNS_TRACK_DOMAIN`         | `Tracking Domain`                                   | `track.$DNS_HOSTNAME`  |
-| `DNS_DKIM_IDENTIFIER`      | DKIM Identifier                                     | `postal`               |
-| `DNS_DOMAIN_VERIFY_PREFIX` | Domain verification prefix                          | `postal-verification`  |
-| `DNS_RETURN_PATH_PREFIX`   | Custom Return Path Prefix                           | `psrp`                 |
+| Parameter                  | Description                                         | Default                     |
+| -------------------------- | --------------------------------------------------- | --------------------------- |
+| `DNS_HELO_HOSTNAME`        | HELO Domain Name Mail Server                        | `postal.example.com`        |
+| `DNS_MX`                   | MX Record Hostnames - Seperate multiple with commas |                             |
+| `DNS_SPF_INCLUDE`          | SPF Hostname                                        | `spf.$DNS_HELO_HOSTNAME`    |
+| `DNS_RETURN_PATH_DOMAIN`   | Return path Hostname                                | `rp.$DNS_HELO_HOSTNAME`     |
+| `DNS_ROUTE_DOMAIN`         | `Routing Domain`                                    | `routes.$DNS_HELO_HOSTNAME` |
+| `DNS_TRACK_DOMAIN`         | `Tracking Domain`                                   | `track.$DNS_HELO_HOSTNAME`  |
+| `DNS_DKIM_IDENTIFIER`      | DKIM Identifier                                     | `postal`                    |
+| `DNS_DOMAIN_VERIFY_PREFIX` | Domain verification prefix                          | `postal-verification`       |
+| `DNS_RETURN_PATH_PREFIX`   | Custom Return Path Prefix                           | `psrp`                      |
 
 #### Security Settings
 | Parameter            | Description                                     | Default                       |
@@ -100,10 +99,10 @@ Be sure to view the following repositories to understand all the customizable op
 | `FAIL2BAN_MAX_RETRY` | Ban after how many tries during time period     | `5`                           |
 
 #### Performance Settings
-| Parameter         | Description                  | Default |
-| ----------------- | ---------------------------- | ------- |
-| `WORKERS_AMOUNT`  | Amount of Workers            | `1`     |
-| `WORKERS_THREADS` | Amount of Threads per worker | `4`     |
+| Parameter         | Description                         | Default |
+| ----------------- | ----------------------------------- | ------- |
+| `WORKERS_THREADS` | Amount of Threads per worker.       | `2`     |
+| `WEB_MAX_THREADS` | Maximum amount of webserver threads | `5`     |
 
 #### Logging Settings
 | Parameter      | Description                             | Default  |
@@ -140,8 +139,8 @@ Be sure to view the following repositories to understand all the customizable op
 
 | Parameter                | Description                | Default |
 | ------------------------ | -------------------------- | ------- |
-| `SPAM_THRESHOLD`         | Amount to classify as Spam | `5.0`   |
-| `SPAM_FAILURE_THRESHOLD` | Amount to fail as Spam     | `5.0`   |
+| `SPAM_THRESHOLD`         | Amount to classify as Spam | `5`     |
+| `SPAM_FAILURE_THRESHOLD` | Amount to fail as Spam     | `20`    |
 
 #### Anti Virus Settings
 | Parameter       | Description                     | Default |
@@ -155,22 +154,21 @@ Be sure to view the following repositories to understand all the customizable op
 | Parameter                  | Description                               | Default |
 | -------------------------- | ----------------------------------------- | ------- |
 | `SMTP_CLIENT_OPEN_TIMEOUT` | Timeout for an Open Connection in seconds | `30`    |
-| `SMTP_CLIENT_READ_TIMEOUT` | Timeout for Reading Data in seconds       | `60`    |
+| `SMTP_CLIENT_READ_TIMEOUT` | Timeout for Reading Data in seconds       | `30`    |
 
 ##### Server
-| Parameter                            | Description                                        | Default           |
-| ------------------------------------ | -------------------------------------------------- | ----------------- |
-| `SMTP_SERVER_ENABLE_TLS`             | Enable TLS                                         | `false`           |
-| `SMTP_SERVER_HELO_HOSTNAME`          | What Hostname to send for HELO                     | `$DNS_HOSTNAME`   |
-| `SMTP_SERVER_LOG_CONNECTIONS`        | Log SMTP Connections                               | `true`            |
-| `SMTP_SERVER_MAX_MESSAGE_SIZE`       | Max message size in Megabytes                      | `50`              |
-| `SMTP_SERVER_PORT`                   | Listening Port for Postal Main SMTP Server         | `25`              |
-| `SMTP_SERVER_PROXY_PROTOCOL`         | Utilize Proxy Protocol                             | `false`           |
-| `SMTP_SERVER_SSL_VERSION`            | SSL Versions                                       | `SSLv23`          |
-| `SMTP_SERVER_STRIP_RECEIVED_HEADERS` | Strip Recieved Headers                             | `false`           |
-| `SMTP_SERVER_TLS_CERT`               | TLS Cert Location (Will authgenerate if not exist) | `/certs/cert.pem` |
-| `SMTP_SERVER_TLS_CIPHERS`            | TLS Ciphers to use                                 |                   |
-| `SMTP_SERVER_TLS_KEY`                | TLS Key Location (Will autogenerate if not exist)  | `/certs/key.pem`  |
+| Parameter                            | Description                                        | Default             |
+| ------------------------------------ | -------------------------------------------------- | ------------------- |
+| `SMTP_SERVER_HOSTNAME`               | SMTP Server hostname                               | `postal.examle.com` |
+| `SMTP_SERVER_ENABLE_TLS`             | Enable TLS                                         | `false`             |
+| `SMTP_SERVER_LOG_CONNECTIONS`        | Log SMTP Connections                               | `false`             |
+| `SMTP_SERVER_MAX_MESSAGE_SIZE`       | Max message size in Megabytes                      | `50`                |
+| `SMTP_SERVER_PORT`                   | Listening Port for Postal Main SMTP Server         | `25`                |
+| `SMTP_SERVER_PROXY_PROTOCOL`         | Utilize Proxy Protocol                             | `false`             |
+| `SMTP_SERVER_TLS_SSL_VERSION`        | SSL Versions                                       | `SSLv23`            |
+| `SMTP_SERVER_TLS_CERT`               | TLS Cert Location (Will authgenerate if not exist) | `/certs/cert.pem`   |
+| `SMTP_SERVER_TLS_CIPHERS`            | TLS Ciphers to use                                 |                     |
+| `SMTP_SERVER_TLS_KEY`                | TLS Key Location (Will autogenerate if not exist)  | `/certs/key.pem`    |
 
 ##### Management System
 | Parameter           | Description                                                                    | Default                 |
@@ -182,12 +180,12 @@ Be sure to view the following repositories to understand all the customizable op
 | `SMTP_USER`         | Username to authenticate to SMTP Server                                        |                         |
 | `SMTP_PASS`         | Password to authenticate to SMTP Server                                        |                         |
 
-##### Relay
+<!-- ##### Relay
 | Parameter             | Description                                  | Default |
 | --------------------- | -------------------------------------------- | ------- |
 | `SMTP_RELAY_HOST`     | Relay all outbound messages to this hostname |         |
 | `SMTP_RELAY_PORT`     | SMTP Relay Port                              | `25`    |
-| `SMTP_RELAY_SSL_MODE` | Relay SSL / TLS Mode                         | `Auto`  |
+| `SMTP_RELAY_SSL_MODE` | Relay SSL / TLS Mode                         | `Auto`  | -->
 
 #### Other Settings
 | Parameter                   | Description                                                                  | Default              |
@@ -200,10 +198,9 @@ Be sure to view the following repositories to understand all the customizable op
 | `SETUP_TYPE`                | Choose `AUTO` or `MANUAL` Setup type - Auto uses these environment variables | `AUTO`               |
 | `SIGNING_KEY_FILE`          | Signing Key File                                                             | `signing.key`        |
 | `SIGNING_KEY_SIZE`          | Signing Key Size                                                             | `1024`               |
-| `WEB_BIND_IP`               | Bind IP for the Web Interface                                                | `0.0.0.0`            |
-| `WEB_BIND_PORT`             | Bind Port for the Web Interface                                              | `5000`               |
+| `WEB_BIND_ADDRESS`          | Bind IP for the Web Interface                                                | `0.0.0.0`            |
+| `WEB_PORT`                  | Bind Port for the Web Interface                                              | `5000`               |
 | `WEB_HOSTNAME`              | Hostname for Web Interface                                                   | `postal.example.com` |
-| `WEB_MAX_THREADS`           | Max Threads for Web Interface                                                | `5`                  |
 | `WEB_PROTOCOL`              | Protocol for Web Interface `http` or `https`                                 | `http`               |
 ### Networking
 
