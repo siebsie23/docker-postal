@@ -1,5 +1,5 @@
 POSTAL_VERSION ?= main
-POSTAL_COMMIT ?= 304828a
+POSTAL_COMMIT ?= da90e75
 
 build: # Build single image image. Usage: make build POSTAL_VERSION="postalversion"
 	@docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg POSTAL_VERSION="$(POSTAL_VERSION)" -t siebsie23/docker-postal:$(POSTAL_VERSION) .
