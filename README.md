@@ -202,6 +202,8 @@ Be sure to view the following repositories to understand all the customizable op
 | `WEB_PORT`                  | Bind Port for the Web Interface                                              | `5000`               |
 | `WEB_HOSTNAME`              | Hostname for Web Interface                                                   | `postal.example.com` |
 | `WEB_PROTOCOL`              | Protocol for Web Interface `http` or `https`                                 | `http`               |
+| `WORKER_HEALTH_SERVER_BIND_ADDRESS` | Bind IP for the worker health server                                 | `0.0.0.0`            |
+| `WORKER_HEALTH_SERVER_PORT` | Bind Port for the worker health server                                       | `9090`               |
 ### Networking
 
 | Port   | Description            |

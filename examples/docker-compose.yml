@@ -41,12 +41,12 @@ services:
       - ENABLE_CLAMAV=true
       - CLAMAV_HOST=postal-clamav
 
-      - DNS_HOSTNAME=postal.example.com
+      - DNS_HELO_HOSTNAME=postal.example.com
       - DNS_MX=postal.example.com
-      - DNS_RETURN_PATH=rp.postal.example.com
+      - DNS_RETURN_PATH_DOMAIN=rp.postal.example.com
       - DNS_ROUTE_DOMAIN=routes.postal.example.com
       - DNS_TRACK_DOMAIN=postal.example.com
-      - DNS_SPF=spf.postal.example.com
+      - DNS_SPF_INCLUDE=spf.postal.example.com
       - DNS_DKIM_IDENTIFIER=postal
       - DNS_DOMAIN_VERIFY_PREFIX=kd-verify
 
@@ -60,7 +60,7 @@ services:
       - SMTP_USER=   ## Fill these in after you have a working installation and server to be able to invite users
       - SMTP_PASS=   ##
 
-      - WEB_HOST=postal.example.com
+      - WEB_HOSTNAME=postal.example.com
       - WEB_PROTOCOL=https
 
     networks:
