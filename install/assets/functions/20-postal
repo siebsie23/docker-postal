@@ -420,8 +420,8 @@ oidc:
 EOF
   fi
 
-  if [ "${CONFIG_PATH}"/"${CONFIG_FILE}" != "/app/config/postal/postal.yml" ] ; then
-    ln -sf "${CONFIG_PATH}"/"${CONFIG_FILE}" /app/config/postal/postal.yml
+  if [ "${CONFIG_PATH}"/"${CONFIG_FILE}" != "/app/config/postal.yml" ] ; then
+    ln -sf "${CONFIG_PATH}"/"${CONFIG_FILE}" /app/config/postal.yml
   fi
 
   if [ -f "${CONFIG_PATH}"/"${SIGNING_KEY_FILE}" ] && [ ! -f "/app/config/signing.key" ] ; then
