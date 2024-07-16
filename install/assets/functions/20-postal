@@ -210,7 +210,7 @@ check_spamassassin() {
 compile_assets() {
   print_info "Compiling Assets"
   cd /app/
-  silent sudo -HEu postal POSTAL_SKIP_CONFIG_CHECK=1 RAILS_GROUPS=assets bundle exec rake assets:precompile
+  silent sudo -HEu postal RAILS_GROUPS=assets bundle exec rake assets:precompile
   silent sudo -HEu postal touch /app/public/assets/.prebuilt
 }
 
@@ -345,7 +345,7 @@ smtp_server:
 
 dns:
   mx_records:
-    - ${DNS_MX}
+    ${mx_record}
   spf_include: ${DNS_SPF_INCLUDE}
   return_path_domain: ${DNS_RETURN_PATH_DOMAIN}
   route_domain: ${DNS_ROUTE_DOMAIN}
@@ -371,7 +371,7 @@ smtp:
 
 rails:
   environment: production
-  secret_key: ${RAILS_SECRET_KEY}
+  secret_key: ${rails_secret_key}
 
 rspamd:
   enabled: ${ENABLE_RSPAMD}
@@ -419,6 +419,10 @@ oidc:
   jwks_uri: 
 EOF
   fi
+
+  # Set the correct permissions for the config directory and postal.yml file
+  chown -R postal:postal "${CONFIG_PATH}"
+  chmod -R 755 "${CONFIG_PATH}"
 
   if [ "${CONFIG_PATH}"/"${CONFIG_FILE}" != "/app/config/postal.yml" ] ; then
     ln -sf "${CONFIG_PATH}"/"${CONFIG_FILE}" /app/config/postal.yml
