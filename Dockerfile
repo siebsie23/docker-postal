@@ -4,7 +4,7 @@ ARG POSTAL_COMMIT="da90e75"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
 LABEL commit="$POSTAL_COMMIT"
 
-ENV POSTAL_CONFIG_FILE_PATH=/app/config/ \
+ENV POSTAL_CONFIG_FILE_PATH=/app/config/postal.yml \
     CONTAINER_ENABLE_MESSAGING=FALSE \
     RAILS_ENVIRONMENT=production
 
