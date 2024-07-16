@@ -284,7 +284,7 @@ postal:
   default_spam_failure_threshold: ${SPAM_FAILURE_THRESHOLD}
   use_local_ns_for_domain_verification: ${USE_LOCAL_NS_FOR_DOMAIN_VERIFICATION}
   use_resent_sender_header: ${USE_RESENT_SENDER_HEADER}
-  signing_key_path: $config-file-root/signing.key
+  signing_key_path: ${CONFIG_PATH}/${SIGNING_KEY_FILE}
   smtp_relays: []
   trusted_proxies: []
   queued_message_lock_stale_days: ${QUEUED_MESSAGE_LOCK_STALE_DAYS}
