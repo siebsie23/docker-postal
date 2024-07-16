@@ -4,9 +4,9 @@ ARG POSTAL_COMMIT="da90e75"
 LABEL maintainer="Sibren van Setten (github.com/siebsie23)"
 LABEL commit="$POSTAL_COMMIT"
 
-ENV POSTAL_CONFIG_ROOT=/app/config/ \
+ENV POSTAL_CONFIG_FILE_PATH=/app/config/ \
     CONTAINER_ENABLE_MESSAGING=FALSE \
-    RAILS_ENV=production
+    RAILS_ENVIRONMENT=production
 
 RUN set -x && \
     addgroup -g 2525 postal && \
