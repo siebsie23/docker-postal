@@ -19,6 +19,7 @@ RUN set -x && \
             git \
             mariadb-dev \
             ruby-dev \
+            yaml-dev \
             && \
     \
     apk add --virtual .postal-run-deps \
